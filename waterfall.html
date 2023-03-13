@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #333;
+      }
+      #app {
+        max-width: 680px;
+        margin: auto;
+      }
+      .waterfall {
+        display: grid;
+        grid-template-columns: repeat(2, 50%);
+        grid-row-gap: 20px;
+        /*         
+        -webkit-column-count: 2;
+        -webkit-column-gap: 20px;
+        -webkit-column-fill: auto;
+        column-count: 2;
+        column-gap: 20px;
+        column-fill: auto; */
+        padding: 20px;
+        display: flex;
+        /* flex-flow: column wrap;
+        height: 40000px; */
+      }
+      .item {
+        /* break-inside: avoid; */
+        margin-bottom: 20px;
+        opacity: 0;
+        transition: all 0.3s;
+        position: absolute;
+      }
+      .item.active{
+        opacity: 1;
+        position: static;
+      }
+      .left,
+      .right {
+        flex: 1;
+      }
+      .right {
+        margin-left: 20px;
+      }
+      .item:nth-child(2n + 1) {
+        order: 1;
+      }
+      .item:nth-child(2n) {
+        order: 2;
+      }
+      .cover img {
+        display: block;
+        object-fit: cover;
+        width: 100%;
+      }
+      .info {
+        padding: 10px 20px;
+      }
+      .inner {
+        border-radius: 5px;
+        overflow: hidden;
+        background-color: #fff;
+      }
+    </style>
+    <script>
+      const pictures = [];
+      let id = 0;
+
+      function createPicture(image) {
+        id++;
+        pictures.push({
+          id,
+          image,
+          name: "颤三",
+          time: Date.now() - Math.ceil(Math.random() * 100000),
+        });
+      }
+      [
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9f5430b5-b408-4edc-1439-f369d3094300/width=450/145336",
+        "https://pres.xiaobaid.com/txb/template/pre/20200611/46e63a5179c2cb3fccd6f11355ae3270.jpg",
+        "https://pres.xiaobaid.com/txb/template/pre/20200611/46e63a5179c2cb3fccd6f11355ae3270.jpg",
+        "https://pres.xiaobaid.com/txb/template/pre/20200611/46e63a5179c2cb3fccd6f11355ae3270.jpg",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/84735137-e96a-4d8b-9db1-96f44c1f8b00/width=450/173273",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/aeb61bc2-c53a-46e8-0580-325cd07c5a00/width=450/02541-3216178258-Masterpiece%20best%20quality%201%20man%20tibetan%20clothes%20grin%20%20%20closeup%20of%20face9e59422a6c8ef3842321f2a19739360893f03f06.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d94637e3-ca63-4629-f933-dfcdb6d9ae00/width=450/179993",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/65f4efa0-c412-4532-69e6-120edba40000/width=450/00588-311630300-makima20_chainsaw20man_20best20quality20ultra20detailed201girl20solo20standing20red20hair20long20braided20hair20golden20eyes20ringed.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/87c88df9-2e11-4b76-4eab-6f37a914f000/width=450/31212-1317794329-1girl,head,shamare,simple%20city%20background,holding%20coffee%20cup,Omertosa,cowboy%20shot,.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ebe33058-77e5-48d3-3123-3a92da08b700/width=450/173382",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/dfed8768-7875-4d8a-1115-523f58c3b100/width=450/00086-2924982681.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/44d132d8-709d-4ef9-b50e-82784e633400/width=450/185461",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b11f7a1a-c998-4444-f866-4c01fcbeb300/width=450/32782-1599417334-(hanfu_0.9),(ru_qun_1.1),(masterpiece_1.2),%20(best%20quality_1.3),%20(ultra-detailed_1.2),%20(illustration_1.2),%20(Cinematic%20Lighting),I.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e8ea892a-556d-484f-d93f-f7be102d4900/width=450/143007",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b19587ae-4fe3-4b74-449d-29143241a200/width=450/12763-1658926436-yorha%20no.%202%20type%20b,%201girl,%20absurdres,%20black%20blindfold,%20black%20dress,%20black%20hairband,%20blindfold,%20blue%20sky,%20boots,%20building,%20city,.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f09e9b23-8921-45aa-c09b-595819ecdd00/width=450/195525",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4d18c7f1-d6c5-4fb6-9d69-857b17429600/width=450/00083.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/23076afd-aca0-4c99-a8c9-b44d874eca00/width=450/Immagine%202023-01-21%20182642.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1296711f-c088-4393-c601-b613dcaff300/width=450/03479-3763488158-1girl,freedom,long%20hair,_solid%20pupils.png",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/035006e7-6522-48bb-2be8-38ee10329500/width=450/199597",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/17ae24a7-8ce4-44fb-ac2c-a2dccfa54c00/width=450/192323",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4046531e-e479-4b5d-70fb-6f056bc8a000/width=450/00402-4121272565-photorealistic%20protrait%20raw%20color%20protrait%20photo,%20cinematic%20light,%20Chinese%20cosplayer,%20genshin%20impact,%20,%20highres,%20smile.jpg",
+        "https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/35eb1e8a-731f-4476-2674-535d07c5ab00/width=450/01072-2062339150-1girl,pantyhose,feet,%20jacket,sitting,chair,from%20below.png",
+      ].forEach(createPicture);
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="waterfall">
+        <!-- <div class="item" v-for="p in pictures" :key="p.id">
+          <div class="inner">
+            <div class="cover">
+                <img :src="p.image" alt="" />
+              </div>
+              <div class="info">
+                <div class="name">{{p.id}}.{{p.name}}</div>
+                <div class="time">{{p.time}}</div>
+              </div>
+          </div>
+        </div> -->
+        <div class="left">
+            <div ref="left"></div>
+        </div>
+        <div class="right">
+            <div ref="right"></div>
+        </div>
+      </div>
+      <div class="item" v-for="p in pictures" :key="p.id">
+        <div class="inner">
+          <div class="cover">
+            <img :src="p.image" alt="" />
+          </div>
+          <div class="info">
+            <div class="name">{{p.id}}.{{p.name}}</div>
+            <div class="time">{{p.time}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+      //   function getHeight(src) {
+      //     return new Promise((res, rej) => {
+      //       const img = new Image();
+      //       img.onload = () => {
+      //         res(img.height);
+      //       };
+      //       img.src = src;
+      //     });
+      //   }
+      const queueList = [];
+      let isPorcess = false;
+      createApp({
+        data() {
+          const left = [],
+            right = [];
+          return {
+            pictures,
+            left,
+            right,
+          };
+        },
+        mounted(){
+            const imgs = document.querySelectorAll('div.item img')
+            queueList.push(...Array.from(imgs));
+            this.processQueue();
+        },
+        methods: {
+          getHeight(ele) {
+            if (!ele) return 0;
+            return ele.getBoundingClientRect().height;
+          },
+          processQueue() {
+            if (queueList.length > 0) {
+              const img = queueList.shift();
+              const item = img.parentNode.parentNode.parentNode
+              const lh = this.getHeight(this.$refs.left),
+                rh = this.getHeight(this.$refs.right);
+              
+
+              const $ref = lh > rh ? this.$refs.right : this.$refs.left;
+              $ref.appendChild(item);
+              setTimeout(() => {
+                item.classList.add('active')
+                this.processQueue()
+              }, 50);
+            } else {
+              isPorcess = false;
+            }
+          },
+          process(ev) {
+            // console.log(ev.currentTarget)
+            // console.log(this.getHeight(this.$refs.left), );
+            queueList.push(ev.currentTarget);
+
+            if (!isPorcess) {
+              isPorcess = true;
+              console.log(isPorcess);
+              this.processQueue();
+            }
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

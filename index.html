@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tinymce</title>
+    <script src="src/tinymce/js/tinymce/tinymce.js"></script>
+    <script>
+      tinymce.init({
+        selector: "#mytextarea",
+        external_plugins: {
+          accordion: "/plugins/accordion.js",
+        },
+        contextmenu: "remove-accordion-menu-ctx",
+        toolbar:
+          "undo redo styles bold italic alignleft aligncenter alignright outdent indent code accordion myCustomToolbarButton image table",
+        plugins: "code accordion image table",
+        content_style: `.accordion-widget {
+        border: solid 1px #000;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .accordion-widget .accordion-header {
+        background-color: #eee;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .accordion-widget .accordion-header::after {
+        content: " ";
+        display: block;
+        width: 24px;
+        height: 24px;
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjc4MDg0ODYwNDg0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI3MzgiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+PHBhdGggZD0iTTczMS43MzMzMzMgNDgwbC0zODQtMzQxLjMzMzMzM2MtMTcuMDY2NjY3LTE0LjkzMzMzMy00NC44LTE0LjkzMzMzMy01OS43MzMzMzMgNC4yNjY2NjYtMTQuOTMzMzMzIDE3LjA2NjY2Ny0xNC45MzMzMzMgNDQuOCA0LjI2NjY2NyA1OS43MzMzMzRMNjQwIDUxMiAyOTIuMjY2NjY3IDgyMS4zMzMzMzNjLTE3LjA2NjY2NyAxNC45MzMzMzMtMTkuMiA0Mi42NjY2NjctNC4yNjY2NjcgNTkuNzMzMzM0IDguNTMzMzMzIDguNTMzMzMzIDE5LjIgMTQuOTMzMzMzIDMyIDE0LjkzMzMzMyAxMC42NjY2NjcgMCAxOS4yLTQuMjY2NjY3IDI3LjczMzMzMy0xMC42NjY2NjdsMzg0LTM0MS4zMzMzMzNjOC41MzMzMzMtOC41MzMzMzMgMTQuOTMzMzMzLTE5LjIgMTQuOTMzMzM0LTMycy00LjI2NjY2Ny0yMy40NjY2NjctMTQuOTMzMzM0LTMyeiIgZmlsbD0iIzY2NjY2NiIgcC1pZD0iMjczOSI+PC9wYXRoPjwvc3ZnPg==);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transform: rotate(90deg);
+        transition: transform 0.1s;
+      }
+      .accordion-widget .accordion-title {
+      }
+      .accordion-widget .accordion-body {
+      }
+      .accordion-widget .accordion-body {
+      }
+      .accordion-widget .accordion-content-wrapper {
+        margin: 15px;
+        display: block;
+      }`,
+        // menubar:'accordion'
+      });
+    </script>
+    <style>
+      .accordion-widget {
+        border: solid 1px #000;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .accordion-widget .accordion-header {
+        background-color: #eee;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .accordion-widget .accordion-header::after {
+        content: " ";
+        display: block;
+        width: 24px;
+        height: 24px;
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjc4MDg0ODYwNDg0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI3MzgiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+PHBhdGggZD0iTTczMS43MzMzMzMgNDgwbC0zODQtMzQxLjMzMzMzM2MtMTcuMDY2NjY3LTE0LjkzMzMzMy00NC44LTE0LjkzMzMzMy01OS43MzMzMzMgNC4yNjY2NjYtMTQuOTMzMzMzIDE3LjA2NjY2Ny0xNC45MzMzMzMgNDQuOCA0LjI2NjY2NyA1OS43MzMzMzRMNjQwIDUxMiAyOTIuMjY2NjY3IDgyMS4zMzMzMzNjLTE3LjA2NjY2NyAxNC45MzMzMzMtMTkuMiA0Mi42NjY2NjctNC4yNjY2NjcgNTkuNzMzMzM0IDguNTMzMzMzIDguNTMzMzMzIDE5LjIgMTQuOTMzMzMzIDMyIDE0LjkzMzMzMyAxMC42NjY2NjcgMCAxOS4yLTQuMjY2NjY3IDI3LjczMzMzMy0xMC42NjY2NjdsMzg0LTM0MS4zMzMzMzNjOC41MzMzMzMtOC41MzMzMzMgMTQuOTMzMzMzLTE5LjIgMTQuOTMzMzM0LTMycy00LjI2NjY2Ny0yMy40NjY2NjctMTQuOTMzMzM0LTMyeiIgZmlsbD0iIzY2NjY2NiIgcC1pZD0iMjczOSI+PC9wYXRoPjwvc3ZnPg==);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transform: rotate(0deg);
+        transition: transform 0.1s;
+      }
+      .accordion-widget.open .accordion-header::after {
+        transform: rotate(90deg);
+      }
+      .accordion-widget .accordion-title {
+      }
+      .accordion-widget .accordion-body {
+      }
+      .accordion-widget .accordion-body {
+        height:0;
+        transition: all 0.5s;
+      }
+      .accordion-widget .accordion-content-wrapper {
+        margin: 15px;
+        display: none;
+      }
+      .accordion-widget.open .accordion-content-wrapper {
+        display: block;
+      }
+      .app-container {
+        max-width: 800px;
+        margin: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app-container">
+      <h1>TinyMCE 快速开始示例</h1>
+      <div class="accordion-widget accordion-wrapper" style="margin: 40px auto">
+        <div class="accordion-header">
+          <div class="accordion-title">Hello, World!</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content-wrapper">
+            <table style="border-collapse: collapse; width: 100%" border="1">
+              <colgroup>
+                <col style="width: 25.0135%" />
+                <col style="width: 25.0135%" />
+                <col style="width: 25.0135%" />
+                <col style="width: 25.0135%" />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <form method="post">
+        <textarea placeholder="tinymce demo" id="mytextarea">
+Hello, World!</textarea
+        >
+      </form>
+    </div>
+    <script>
+      document.body.addEventListener("click", (e) => {
+        const target = e.target || e.currentTarget;
+        if (!target) return;
+        const panel = target.classList.contains("accordion-header")
+          ? target.parentNode
+          : target.classList.contains("accordion-title")
+          ? target.parentNode.parentNode
+          : null;
+        if (panel) {
+          const b = panel.querySelector(".accordion-body"),
+            wrapper = b?.querySelector(".accordion-content-wrapper");
+          if (b && wrapper) {
+            const isOpen = panel.classList.contains("open");
+            panel.classList.toggle("open");
+            const style = window.getComputedStyle(wrapper);
+            const margin = parseInt(style.marginTop);
+            b.style.height =
+              (isOpen ? 0 : wrapper.getBoundingClientRect().height + margin) +
+              "px";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
